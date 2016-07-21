@@ -7,39 +7,24 @@ using Xamarin.Forms;
 
 namespace xPlatAuction
 {
-    public class App : Application
-    {
-        public App()
-        {
-            // The root page of your application
-            MainPage = new ContentPage
-            {
-                Content = new StackLayout
-                {
-                    VerticalOptions = LayoutOptions.Center,
-                    Children = {
-                        new Label {
-                            HorizontalTextAlignment = TextAlignment.Center,
-                            Text = "Welcome to Xamarin Forms!"
-                        }
-                    }
-                }
-            };
-        }
 
-        protected override void OnStart()
-        {
-            // Handle when your app starts
-        }
+	public class App : Xamarin.Forms.Application
+	{
 
-        protected override void OnSleep()
-        {
-            // Handle when your app sleeps
-        }
+		private static AuctionService azService;
 
-        protected override void OnResume()
-        {
-            // Handle when your app resumes
-        }
-    }
+		public App()
+		{
+			MainPage = new NavigationPage(
+				new Auctions());
+		}
+		public static AuctionService GetAuctionService()
+		{
+			if (azService == null)
+			{
+				azService = new AuctionService("http://mosesogutu-hp/xPlatAuction/");
+			}
+			return azService;
+		}
+	}
 }
